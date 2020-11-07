@@ -3,6 +3,7 @@ import "../styles/App.css";
 class Timer extends React.Component {
   constructor(props) {
     super(props);
+    this.timer = 0;
     this.state = { time: 0, x: 0, y: 0, startGame: false };
   }
 
