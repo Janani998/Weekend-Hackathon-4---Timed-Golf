@@ -39,7 +39,7 @@ class Timer extends React.Component {
     clearInterval(this.timer);
   }
 
-  handleClick = () => {
+  handleClick = function () {
     this.setState({ startGame: true });
   };
 
