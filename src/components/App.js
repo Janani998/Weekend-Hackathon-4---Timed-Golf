@@ -4,51 +4,57 @@ class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.timer = 0;
-    this.state = { time: 0, x: 0, y: 0, startGame: false };
+    this.state = { time: 0, x: 0, y: 0, isGameStarted: false };
     this.onKeyDown = this.onKeyDown.bind(this);
+    this.startGame = this.startGame.bind(this);
   }
 
   componentDidMount() {
-    this.timer = setInterval(() => {
-      if (this.state.startGame) {
-        this.setState({ time: this.state.time + 1 });
-        if (this.state.x === 250 && this.state.y === 250) {
-          this.setState({ startGame: false });
-          document.removeEventListener("keydown", this.onKeyDown);
-          return;
-        }
-        document.addEventListener("keydown", this.onKeyDown);
-      }
-    }, 1000);
+    document.addEventListener("keydown", this.onKeyDown, false);
+  }
+
+  componentDidUpdate() {
+    if (this.state.x === 250 && this.state.y === 250) {
+      // this.setState({ startGame: false });
+      clearInterval(this.timer);
+      document.removeEventListener("keydown", this.onKeyDown);
+      // return;
+    }
   }
 
   componentWillUnmount() {
     clearInterval(this.timer);
+    document.removeEventListener("keydown", this.onKeyDown);
   }
 
-  onKeyDown = function (event) {
+  onKeyDown(event) {
+    if (!this.state.startGame) {
+      return;
+    }
     if (event.keyCode === 39) {
       this.setState({ x: this.state.x + 5 });
-    }
-    if (event.keyCode === 37) {
+    } else if (event.keyCode === 37) {
       this.setState({ x: this.state.x - 5 });
-    }
-    if (event.keyCode === 38) {
+    } else if (event.keyCode === 38) {
       this.setState({ y: this.state.y - 5 });
-    }
-    if (event.keyCode === 40) {
+    } else if (event.keyCode === 40) {
       this.setState({ y: this.state.y + 5 });
     }
-  };
+  }
 
-  handleClick = function () {
-    this.setState({ startGame: true });
-  };
+  handleStartGame() {
+    this.setState({ isGameStarted: true });
+    this.timer = setInterval(() => {
+      if (this.state.startGame) {
+        this.setState({ time: this.state.time + 1 });
+      }
+    }, 1000);
+  }
 
   render() {
     return (
       <>
-        <button className="start" onClick={this.handleClick}>
+        <button className="start" onClick={this.handleStartGame}>
           start
         </button>
         <div className="heading-timer">{this.state.time}</div>
