@@ -8,33 +8,32 @@ class Timer extends React.Component {
   }
 
   componentDidMount() {
-    const onKeyDown = (event) => {
-      if (event.keyCode === 39) {
-        this.setState({ x: this.state.x + 5 });
-      }
-      if (event.keyCode === 37) {
-        this.setState({ x: this.state.x - 5 });
-      }
-      if (event.keyCode === 38) {
-        this.setState({ y: this.state.y - 5 });
-      }
-      if (event.keyCode === 40) {
-        this.setState({ y: this.state.y + 5 });
-      }
-    };
     this.timer = setInterval(() => {
       if (this.state.startGame) {
         this.setState({ time: this.state.time + 1 });
         if (this.state.x === 250 && this.state.y === 250) {
           this.setState({ startGame: false });
-          document.removeEventListener("keydown", onKeyDown);
+          document.removeEventListener("keydown", this.onKeyDown);
           return;
         }
-        document.addEventListener("keydown", onKeyDown);
+        document.addEventListener("keydown", this.onKeyDown);
       }
     }, 1000);
   }
-
+  onKeyDown = function (event) {
+    if (event.keyCode === 39) {
+      this.setState({ x: this.state.x + 5 });
+    }
+    if (event.keyCode === 37) {
+      this.setState({ x: this.state.x - 5 });
+    }
+    if (event.keyCode === 38) {
+      this.setState({ y: this.state.y - 5 });
+    }
+    if (event.keyCode === 40) {
+      this.setState({ y: this.state.y + 5 });
+    }
+  };
   componentWillUnmount() {
     clearInterval(this.timer);
   }
