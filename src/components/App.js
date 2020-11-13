@@ -22,7 +22,7 @@ class Timer extends React.Component {
         this.setState({ y: this.state.y + 5 });
       }
     };
-    this.timer = setInterval(() => {
+    this.timer = setInterval(function () {
       if (this.state.startGame) {
         this.setState({ time: this.state.time + 1 });
         if (this.state.x === 250 && this.state.y === 250) {
