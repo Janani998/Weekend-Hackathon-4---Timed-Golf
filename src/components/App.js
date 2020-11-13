@@ -6,7 +6,7 @@ class Timer extends React.Component {
     this.timer = 0;
     this.state = { time: 0, x: 0, y: 0, isGameStarted: false };
     this.onKeyDown = this.onKeyDown.bind(this);
-    this.startGame = this.startGame.bind(this);
+    this.handleStartGame = this.handleStartGame.bind(this);
   }
 
   componentDidMount() {
@@ -15,10 +15,8 @@ class Timer extends React.Component {
 
   componentDidUpdate() {
     if (this.state.x === 250 && this.state.y === 250) {
-      // this.setState({ startGame: false });
       clearInterval(this.timer);
       document.removeEventListener("keydown", this.onKeyDown);
-      // return;
     }
   }
 
@@ -28,7 +26,7 @@ class Timer extends React.Component {
   }
 
   onKeyDown(event) {
-    if (!this.state.startGame) {
+    if (!this.state.isGameStarted) {
       return;
     }
     if (event.keyCode === 39) {
@@ -45,7 +43,7 @@ class Timer extends React.Component {
   handleStartGame() {
     this.setState({ isGameStarted: true });
     this.timer = setInterval(() => {
-      if (this.state.startGame) {
+      if (this.state.isGameStarted) {
         this.setState({ time: this.state.time + 1 });
       }
     }, 1000);
