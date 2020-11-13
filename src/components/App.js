@@ -54,7 +54,7 @@ class Timer extends React.Component {
         <div className="heading-timer">{this.state.time}</div>
         <div
           className="ball"
-          style={{ left: this.state.x, top: this.state.y }}
+          style={{ left: this.state.x + "px", top: this.state.y + "px" }}
         ></div>
         <div className="hole"></div>
       </>
